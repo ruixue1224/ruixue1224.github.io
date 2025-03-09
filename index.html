@@ -1,0 +1,300 @@
+<!--<!DOCTYPE html>    是文档声明-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <div class="snow-container"></div>
+    <meta charset="UTF-8">
+    <title>个人博客--瑞雪</title>
+<link rel="stylesheet" href="./a.css">
+
+<!--    时间戳，显示时间-->
+<!--    <script>-->
+<!--        function  runtime(){-->
+<!--            const date = new Date();-->
+<!--            document.getElementById("datetime").innerHTML =date.toLocaleString();-->
+<!--        }-->
+
+
+
+
+
+<!--        setInterval("getD1();",1000);-->
+
+<!--    </script>无用语句（前期显示系统时间）-->
+
+
+</head>
+
+
+<body onload="time()" style="background-color: #CCFFCC" onload = getD1()>
+<!--<script src="http://www.bokequ.com/winter/templets/xq/js/snowy.js"></script>-->
+<!--<style type="text/css">-->
+<!--    .snow-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100001;}</style>-->
+<!--<div class="snow-container"></div>-->
+<h2 id="showtime"></h2>
+<span id="span"></span>
+<script type="text/javascript">
+
+    function runtime(){
+
+
+
+        // 初始时间，日/月/年 时:分:秒
+        X = new Date("09/27/2024 18:41:00");
+        Y = new Date();
+        T = (Y.getTime()-X.getTime());
+        M = 24*60*60*1000;
+        a = T/M;
+        A = Math.floor(a);
+        b = (a-A)*24;
+        B = Math.floor(b);
+        c = (b-B)*60;
+        C = Math.floor((b-B)*60);
+        D = Math.floor((c-C)*60);
+        //信息写入到DIV中
+        span.innerHTML = "瑞雪的博客已经诞生: "+A+"d:"+B+"h:"+C+"m:"+D+"s了"
+    }
+    setInterval(runtime, 1000);
+
+
+
+</script>
+<!--    <div id="datetime"></div>-->
+
+    <marquee bgcolor="#87CEFA" loop="10" > <h1  style="color: aquamarine;font-size:20px;">欢迎来到我的个人博客--瑞雪</h1>  </marquee>
+<!--        <marquee bgcolor="#87CEFA" loop="10"> 欢迎来到我的个人博客&#45;&#45;瑞雪  </marquee>-->
+<!--      注释：    loop属性可以控制滑动条的滚动次数-->
+
+<!--                <h1>西江月</h1><h1 class="snow">·独坐闲观瑞雪</h1>-->
+
+        <div class="moon" style="display: inline-block">西江月</div>
+    <div class="snow" style="display: inline-block">·独坐闲观瑞雪</div>
+            <h2 >独坐闲观瑞雪，静听风舞琼花。</h2>
+            <h2 >山川素裹净无瑕，几处寒枝霜挂</h2>
+            <h2 >三杯醉意陶然,梦后瑶台阆苑。</h2>
+            <h2 >袅袅炉香忆芳华，且待春归檐下</h2>
+<img src="img/雪夜无人邀月酌.png" style="width: 380px;height: 350px;"  align="left" hspace="30" alt=""/>
+
+    <!--    三种列表    -->
+
+    <!--    Orderd list有序列表    -->
+
+    <div class="poetry">瑞雪兆丰年
+    万物洗轻尘
+    和风送春来
+   又是一年新</div>
+
+
+    <!--   Unorderd list 无序列表    -->
+    <h2>我想达到的目标</h2>
+    <ul>
+        <li>达到数通HCIP水平</li>
+        <li>能够熟练使用前段html5技术，vue框架技术</li>
+        <li>考取软考中级的网络工程师</li>
+        <li>取得全国数学建模大赛的国奖</li>
+    </ul>
+    <!--  Definition list 自定义列表    -->
+<h2></h2>
+<dl>
+        <dt>java</dt>
+    <dd>java是一种面向对象的编程语言</dd>
+        <dt>python</dt>
+    <dd>python也是一种面向对象的编程语言</dd>
+        <dt>C</dt>
+    <dd>C语言是一种面向过程的编程语言</dd>
+</dl>
+<a href="#">回到顶部</a>
+<a href="">刷新页面</a>
+
+<a href="javascript:alert(666);">666</a>
+<table border="1"cellspacing="0">
+    <caption>学生信息</caption>
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>民族</th>
+        <th>政治面貌</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>张三</td>
+        <td>男</td>
+        <td>18</td>
+        <td>汉族</td>
+        <td>团员</td>
+    </tr>
+
+    <tr>
+        <td>李四</td>
+        <td>男</td>
+        <td>20</td>
+        <td>汉族</td>
+        <td>团员</td>
+    </tr>
+
+    <tr>
+        <td>王五</td>
+        <td>女</td>
+        <td>20</td>
+        <td>汉族</td>
+        <td>群众</td>
+    </tr>
+
+    <tr>
+        <td>赵六</td>
+        <td>女</td>
+        <td>20</td>
+        <td>藏族</td>
+        <td>群众</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>共计：4人</td>
+    </tr>
+    </tfoot>
+
+</table>
+<form action="https://www.baidu.com/s" target="_blank">
+    <label>
+        <input type="text" name="wd">
+    </label>
+    <button>去百度搜索</button>
+</form>
+
+    <form action="https://search.jd.com/search" target="_blank" method="get">
+        <input type="text" name="keyword">
+        <button>去京东搜索</button>
+        <br>
+      <fieldset>
+          <legend>主要信息</legend>
+          <label for="zhanghu">账户：</label>
+          <input id="zhanghu"  type="text" name="account" value="瑞雪" maxlength="10">
+          <br>
+          <label for="mima">密码：</label>
+          <input id="mima" type="password" name="pwd" value="123456" maxlength="6">
+          <br>
+          性别：
+          <label>
+              <input type="radio" name="gender" value="male" checked>男
+
+          </label>
+          <label>
+              <input type="radio" name="gender" value="female">女
+          </label>
+      </fieldset>
+        <br>
+       <fieldset>
+           <legend>附加信息</legend>
+           爱好：
+          <label>
+              <input type="checkbox" name="hobby" value="chess" checked>下棋
+          </label>
+           <label>
+               <input type="checkbox" name="hobby" value="drink wine">饮酒
+           </label>
+           <label>
+               <input type="checkbox" name="hobby" value="drink tea">品茗
+           </label>
+           <br>
+           其它：
+
+           <textarea name="other" cols="23" rows="10" ></textarea>
+           <!--        文本域<textarea></textarea>-->
+           <!--        1.roes 属性：指定默认显示的行数，会影响文本的高度-->
+           <!--        2.cols 属性：指定默认显示的列数，会影响文本的宽度-->
+           <!--        3.不能编写type属性，其他属性，与普通文本输入一致-->
+           <br>
+
+
+           学习方向：
+           <select name="place">
+               <option value="" selected>网络安全</option>
+               <option value="">数学建模</option>
+               <option value="">java面向对象开发</option>
+               <option value="">python可视化分析</option>
+               <option value="">数通</option>
+               <!-- 实际提交的数据是value="  "  中的内容-->
+               <!--selected表示默认-->
+           </select>
+
+       </fieldset>
+
+        <!--隐藏域-->
+        <input type="hidden" name="from" value="ruixue">
+        <br>
+        <!--确认按钮的第一种写法！-->
+        <button type="submit">确认</button>
+        <!--确认按钮的第二种写法！-->
+        <!--<input type="submit" value="确认">-->
+        <!--重置按钮的第一种写法！-->
+        <!--<button type="reset">重置</button>-->
+        <!--重置按钮的第二种写法！-->
+        <input type="reset" value="点我重置">
+        <!--普通按钮的第一种写法！-->
+        <button type="button">无用按钮1</button>
+        <!--普通按钮的第二种写法！-->
+        <input type="button" value="无用按钮2">
+    </form>
+<!--
+      _self:   在本窗口打开网页
+      _blank:  在新窗口打开网页
+-->
+<!--        <iframe src="https://y.qq.com/n/ryqq/toplist/26" width="1000" height="350" frameborder="0"></iframe>-->
+
+<!--        <iframe src="https://www.taobao.com" width="1000" height="350" frameborder="0"></iframe>-->
+<!--        <iframe src="https://www.4399.com" width="1000" height="350" frameborder="0"></iframe>-->
+<!--        <iframe src="https://www.kuaishou.com" width="1000" height="750" frameborder="0"></iframe>-->
+<!--        <iframe src="https://sliding.toys/mystic-square/8-puzzle/daily/" width="1000" height="750" frameborder="0"></iframe>-->
+
+    <div><a>一个人尝到了自由的滋味，简直会牺牲一切。— 《约翰·克里斯朵夫》</a></div>
+
+
+
+
+
+
+
+    <br>
+        <div> <meta name="瑞雪" content=""></div>
+        <div>©版权所有</div>
+        <meta name="generator" content="IntelliJ IDEA 2023.2.5">
+        <meta name="copyright" content="2023~2073&copy;版权所有">
+<!--        <meta http-equiv="refresh" content="5;url=http://www.taobao.com">-->
+
+
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://www.bokequ.com/winter/templets/xq/js/snowy.js"></script>
+<style type="text/css">.snow-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100001;}</style>
+<div class="snow-container"></div>
+<script language="javascript">
+    var obj=null;
+    var As=document.getElementById('nav').getElementsByTagName('a');
+    obj = As[0];
+    for(i=1;i<As.length;i++){if(window.location.href.indexOf(As[i].href)>=0)
+        obj=As[i];}
+    obj.id='nav_current'
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?19c7fdd616a0ce2e6a97806ceef4260e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+
+</html>
