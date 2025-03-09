@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://www.bokequ.com/winter/templets/xq/js/modernizr.js"></script>
+    <link href="http://www.bokequ.com/winter/templets/xq/style/base.css" rel="stylesheet">
+<!--    <link href="http://www.bokequ.com/winter/templets/xq/style/index.css" rel="stylesheet">-->
+
+</head>
+<body>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://www.bokequ.com/winter/templets/xq/js/snowy.js"></script>
+<style type="text/css">.snow-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100001;}</style>
+<div class="snow-container"></div>
+<script language="javascript">
+    var obj=null;
+    var As=document.getElementById('nav').getElementsByTagName('a');
+    obj = As[0];
+    for(i=1;i<As.length;i++){if(window.location.href.indexOf(As[i].href)>=0)
+        obj=As[i];}
+    obj.id='nav_current'
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?19c7fdd616a0ce2e6a97806ceef4260e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>
