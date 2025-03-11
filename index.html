@@ -3,7 +3,7 @@
 <head>
     <div class="snow-container"></div>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>标题</title>
  <!-- 引入Markdown解析库（这里使用marked.js） -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- 可选的代码高亮库 -->
@@ -13,7 +13,7 @@
  html {
             background: linear-gradient(120deg, #FFE4B5 12%, #87CEEB 25%, #FFD700 37%, #FF6347 50%, #D8BFD8 63%, #7CFC00 100%);
         }
-    .snow-container {
+    。snow-container {
         position: fixed;
         top: 0;
         left: 0;
@@ -28,22 +28,22 @@ color: plum;
     margin: auto 0;
 }
        /* Markdown内容样式 */
-        .markdown-content {
+        。markdown-content {
             color: #1a73e8;
         }
 
-        .markdown-content h1 {
+        。markdown-content h1 {
             border-bottom: 1px solid #eaecef;
             padding-bottom: 0.3em;
         }
 
-        .markdown-content code {
+        。markdown-content code {
             background-color: #f6f8fa;
             padding: 0.2em 0.4em;
             border-radius: 3px;
         }
 
-        .markdown-content pre {
+        。markdown-content pre {
             background-color: #f6f8fa;
             padding: 16px;
             overflow: auto;
@@ -51,13 +51,13 @@ color: plum;
         }
 
         /* 创建一个比背景窄的画布 */
-        .canvas {
+        。canvas {
             max-width: 800px;
             margin: 0 auto;
-            background-color: rgba(190, 255, 173, 0.85);
+            background-color: rgba(190， 255， 173， 0.85);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0， 0， 0， 0.1);
         }
 </style>
 
@@ -71,19 +71,19 @@ color: plum;
         // 初始时间，日/月/年 时:分:秒
         X = new Date("09/27/2024 18:41:00");
         Y = new Date();
-        T = (Y.getTime()-X.getTime());
+        T = (Y。getTime()-X。getTime());
         M = 24*60*60*1000;
         a = T/M;
-        A = Math.floor(a);
+        A = Math。floor(a);
         b = (a-A)*24;
-        B = Math.floor(b);
+        B = Math。floor(b);
         c = (b-B)*60;
-        C = Math.floor((b-B)*60);
-        D = Math.floor((c-C)*60);
+        C = Math。floor((b-B)*60);
+        D = Math。floor((c-C)*60);
         //信息写入到DIV中
-        span.innerHTML = "瑞雪的博客已经诞生: "+A+"d:"+B+"h:"+C+"m:"+D+"s了"
+        span。innerHTML = "瑞雪的博客已经诞生: "+A+"d:"+B+"h:"+C+"m:"+D+"s了"
     }
-    setInterval(runtime, 1000);
+    setInterval(runtime， 1000);
 
 
 
@@ -104,29 +104,29 @@ color: plum;
 
     <script>
         // 配置marked
-        marked.setOptions({
-            highlight: function(code, lang) {
-                return hljs.highlightAuto(code).value;
-            },
-            breaks: true,
+        marked。setOptions({
+            highlight: function(code， lang) {
+                return hljs。highlightAuto(code)。value;
+            }，
+            breaks: true，
             gfm: true
         });
 
         // 加载并转换Markdown文件
-        window.addEventListener('DOMContentLoaded', (event) => {
+        window。addEventListener('DOMContentLoaded'， (event) => {
             fetch('个人博客～瑞雪.md')  // 修改为你的Markdown文件路径
-                .then(response => response.text())
-                .then(text => {
+                。then(response => response。text())
+                。then(text => {
                     // 转换Markdown为HTML
-                    const htmlContent = marked.parse(text);
+                    const htmlContent = marked。parse(text);
                     // 插入到容器中
-                    document.getElementById('markdown-container').innerHTML = htmlContent;
+                    document。getElementById('markdown-container')。innerHTML = htmlContent;
                     // 执行代码高亮
-                    hljs.highlightAll();
+                    hljs。highlightAll();
                 })
-                .catch(err => {
-                    console.error('加载Markdown文件失败:', err);
-                    document.getElementById('markdown-container').innerHTML =
+                。catch(err => {
+                    console。error('加载Markdown文件失败:'， err);
+                    document。getElementById('markdown-container')。innerHTML =
                         '<p style="color: red">加载内容失败，请检查文件路径</p>';
                 });
         });
