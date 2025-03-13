@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>瑞雪&博客</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入Markdown解析库（这里使用marked.js） -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -38,6 +38,10 @@
             pointer-events:none;
             z-index:100001;
         }
+        .container {
+  width: 90%; /* 容器宽度占据视口的 90% */
+  margin: 0 auto; /* 水平居中 */
+}
         /* Markdown内容样式 */
         .markdown-content {
             color: #1a73e8;
