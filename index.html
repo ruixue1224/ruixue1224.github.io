@@ -115,6 +115,24 @@ color: plum;
                 padding: 5px;
             }
         }
+ /* 接入AI模型的跳转链接样式 */
+        .jump-link {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .jump-link:hover {
+            background-color: #2563eb;
+        }
+
+
+        
     </style>
 </head>
 
@@ -151,6 +169,10 @@ color: plum;
         <h1 style="color: aquamarine; font-size: 20px;">欢迎来到我的个人博客--瑞雪</h1>
     </marquee>
 
+    <!-- 添加跳转到rober_text.html的链接 -->
+    <p><a href="rober_text.html" class="jump-link">智能助手</a></p>
+
+    
     <!-- 创建一个比背景窄的画布 -->
     <div class="canvas">
         <!-- Markdown内容容器 -->
