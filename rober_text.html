@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能管家助手</title>
+    <title>J.A.R.V.I.S 智能助手</title>
     <style>
         :root {
             --primary-blue: #3b82f6;
@@ -157,13 +157,29 @@
             line-height: 1.8;
             white-space: pre-wrap;
         }
+
+        /* 返回链接样式 */
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #2563eb;
+        }
     </style>
 </head>
 <body>
 <div class="jarvis-container">
     <div class="chat-area" id="chatArea">
         <div class="thinking-overlay" id="thinkingOverlay">
-            <div class="thinking-text">&#128993; 贾维斯正在思考中...</div>
+            <div class="thinking-text">&#128993; 智能助手瑞雪正在思考中...</div>
         </div>
     </div>
 
@@ -174,7 +190,6 @@
                     id="userInput"
                     placeholder="输入您的指令..."
                     autocomplete="off"
-
             >
             <button type="submit" id="submitBtn">发送</button>
         </form>
@@ -182,8 +197,8 @@
 </div>
 
 <!-- 添加返回index.html的链接 -->
-<p><a href="index.html">返回博客首页</a></p>
-    
+<p><a href="index.html" class="back-link">返回博客首页</a></p>
+
 <script>
     const API_KEY = 'sk-oeiegrgredxfnaqeenevwjxcfzamvodgpwzlimqusvwbgdnb'; // 替换为实际API密钥
     const API_ENDPOINT = 'https://api.siliconflow.cn/v1/chat/completions'; // 替换为正确的API地址
@@ -197,7 +212,7 @@
     }
 
     function createMessageElement(role, content) {
-        const messageId = `msg-${Date.now()}`;
+        const messageId = `msg-${Date.now()`;
         const element = document.createElement('div');
         element.className = `message ${role}-message`;
         element.innerHTML = `
@@ -235,7 +250,7 @@
                     'Authorization': `Bearer ${API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B", // 使用正确的模型名称
+                    model: "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B", // 确保模型名称正确
                     messages: [{ role: "user", content: message }],
                     temperature: 0.7,
                     presence_penalty: 0.6
