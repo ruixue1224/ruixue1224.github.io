@@ -498,6 +498,94 @@ public class Main {
 
 根据具体需求选择合适的方法！如果只是格式化输出，推荐 `String.format` 或 `DecimalFormat`；若涉及精确计算，优先使用 `BigDecimal`。
 
+
+- ## 蓝桥杯练习题
+
+
+### 小齐的大学学费(81201)简单题
+
+
+题目描述：
+## 问题描述
+
+小齐计划开设一所新的大学供奶牛上学！
+
+有 N 头奶牛可能会考虑上这所大学。每头奶牛愿意支付的最大学费为 c_i。小齐可以设定所有奶牛必须支付的学费。如果学费高于一头奶牛愿意支付的最大金额，那么这头奶牛将不参加这所大学。小齐希望尽可能赚更多的钱，以便公平支付给他的讲师们。请确定他可以赚取的最大金额以及他应该收取的最优学费。
+
+## 输入格式
+
+第一行包含整数 N。
+
+第二行包含 N 个整数 c_1, c_2, ..., c_N，其中 c_i 表示第 i 头奶牛愿意支付的最大学费。
+
+## 输出格式
+
+请输出小齐可以赚取的最大金额以及他应该收取的最优学费。如果有多个解决方案，请输出学费最小的解决方案。
+
+## 样例输入
+
+
+```
+4
+1 6 4 6
+```
+
+
+## 样例输出
+
+
+```
+12 4
+```
+
+
+## 评测数据规模
+
+
+```
+1 ≤ N ≤ 10^5，1 ≤ c_i ≤ 10^6。
+```
+
+
+```java
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] c = new int[N];
+        for (int i = 0; i < N; i++) {
+            c[i] = scanner.nextInt();
+        }
+        Arrays.sort(c); // 将数组排序为升序
+
+        long maxTotal = 0; // 最大总金额
+        long optimalFee = 0; // 最优学费
+
+        for (int i = 0; i < N; i++) {
+            // 计算当前学费c[i]对应的总金额
+            long currentTotal = (long) c[i] * (N - i);
+            
+            if (currentTotal > maxTotal) {
+                maxTotal = currentTotal;
+                optimalFee = c[i];
+            } else if (currentTotal == maxTotal) {
+                // 如果有相同金额，选择更小的学费
+                if (c[i] < optimalFee) {
+                    optimalFee = c[i];
+                }
+            }
+        }
+
+        System.out.println(maxTotal + " " + optimalFee);
+    }
+}
+```
+
+
+
 - ## 交换机命令行
 
 
