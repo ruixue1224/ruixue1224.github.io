@@ -499,6 +499,212 @@ public class Main {
 根据具体需求选择合适的方法！如果只是格式化输出，推荐 `String.format` 或 `DecimalFormat`；若涉及精确计算，优先使用 `BigDecimal`。
 
 
+
+
+
+## java中常用的库
+Java 标准库（核心 API）中提供了丰富的内置工具类和方法，涵盖排序、进制转换、时间日期处理、数学计算和数据处理等常见需求。以下是具体的分类整理及示例：
+
+---
+
+### **1. 排序（Sorting）**
+Java 提供了对数组和集合的排序方法，支持自然排序和自定义排序规则。
+
+#### **数组排序**
+```java
+import java.util.Arrays;
+
+int[] numbers = {5, 3, 9, 1};
+Arrays.sort(numbers); // 升序排序
+System.out.println(Arrays.toString(numbers)); // [1, 3, 5, 9]
+
+// 降序排序（需要转换为包装类）
+Integer[] nums = {5, 3, 9, 1};
+Arrays.sort(nums, (a, b) -> b - a); // 使用 Comparator
+System.out.println(Arrays.toString(nums)); // [9, 5, 3, 1]
+```
+
+#### **集合排序**
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+List<Integer> list = new ArrayList<>(Arrays.asList(5, 3, 9, 1));
+Collections.sort(list); // 升序
+System.out.println(list); // [1, 3, 5, 9]
+
+// 自定义排序（按字符串长度）
+List<String> words = Arrays.asList("apple", "banana", "cherry");
+Collections.sort(words, Comparator.comparingInt(String::length));
+System.out.println(words); // [apple, cherry, banana]
+```
+
+---
+
+### **2. 进制转换（Base Conversion）**
+Java 内置了整数到不同进制字符串的转换方法。
+
+#### **十进制 ↔ 其他进制**
+```java
+int num = 255;
+
+// 十进制转二进制、八进制、十六进制
+String binary = Integer.toBinaryString(num); // "11111111"
+String octal = Integer.toOctalString(num);    // "377"
+String hex = Integer.toHexString(num);        // "ff"
+
+// 其他进制转十进制
+int fromBinary = Integer.parseInt("11111111", 2);  // 255
+int fromHex = Integer.parseInt("ff", 16);          // 255
+```
+
+#### **任意进制转换（2~36）**
+```java
+// 十进制转三进制
+String base3 = Integer.toString(10, 3); // "101"
+
+// 三进制转十进制
+int decimal = Integer.parseInt("101", 3); // 10
+```
+
+---
+
+### **3. 时间日期处理（Date & Time）**
+Java 8 引入的 `java.time` 包提供了现代化的时间日期 API。
+
+#### **基础操作**
+```java
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+// 当前日期和时间
+LocalDate today = LocalDate.now();
+LocalDateTime now = LocalDateTime.now();
+
+// 自定义日期
+LocalDate date = LocalDate.of(2023, 10, 1);
+LocalDateTime datetime = LocalDateTime.of(2023, 10, 1, 12, 30);
+
+// 格式化与解析
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+String formatted = datetime.format(formatter); // "2023-10-01 12:30"
+LocalDateTime parsed = LocalDateTime.parse("2023-10-01 12:30", formatter);
+```
+
+#### **时间差计算**
+```java
+import java.time.Duration;
+import java.time.Period;
+
+LocalDate startDate = LocalDate.of(2023, 1, 1);
+LocalDate endDate = LocalDate.of(2023, 10, 1);
+
+// 计算天数差
+long days = Period.between(startDate, endDate).getDays();
+
+// 计算小时差（LocalDateTime）
+LocalDateTime start = LocalDateTime.of(2023, 1, 1, 0, 0);
+LocalDateTime end = LocalDateTime.of(2023, 1, 1, 12, 30);
+Duration duration = Duration.between(start, end);
+long hours = duration.toHours(); // 12
+```
+
+---
+
+### **4. 数学计算（Math Utilities）**
+`Math` 类提供了常见的数学运算方法。
+
+#### **幂运算（几次方）**
+```java
+// 计算 2 的 10 次方
+double result = Math.pow(2, 10); // 1024.0
+int intResult = (int) Math.pow(2, 10); // 强制转换为 int（1024）
+
+// 平方根
+double sqrt = Math.sqrt(16); // 4.0
+```
+
+#### **其他数学工具**
+```java
+// 绝对值
+Math.abs(-5); // 5
+
+// 四舍五入
+Math.round(3.6); // 4
+
+// 最大值/最小值
+Math.max(10, 20); // 20
+Math.min(10, 20); // 10
+```
+
+---
+
+### **5. 数据处理类型**
+Java 集合框架（`java.util`）提供了多种数据结构。
+
+#### **集合类型**
+```java
+import java.util.*;
+
+// List（有序、可重复）
+List<String> list = new ArrayList<>();
+list.add("A");
+list.get(0); // 访问元素
+
+// Set（无序、唯一）
+Set<Integer> set = new HashSet<>();
+set.add(1);
+set.add(1); // 重复元素被忽略
+
+// Map（键值对）
+Map<String, Integer> map = new HashMap<>();
+map.put("apple", 1);
+map.get("apple"); // 1
+```
+
+#### **不可变集合（Java 9+）**
+```java
+List<String> immutableList = List.of("A", "B", "C");
+Set<Integer> immutableSet = Set.of(1, 2, 3);
+Map<String, Integer> immutableMap = Map.of("a", 1, "b", 2);
+```
+
+---
+
+### **6. 其他工具类**
+#### **数组工具（`Arrays`）**
+```java
+int[] arr = {3, 1, 2};
+Arrays.sort(arr); // 排序
+Arrays.fill(arr, 0); // 填充为 0
+int[] copy = Arrays.copyOf(arr, arr.length); // 复制数组
+```
+
+#### **数值处理（`BigDecimal`）**
+高精度计算（避免浮点数误差）：
+```java
+import java.math.BigDecimal;
+
+BigDecimal a = new BigDecimal("0.1");
+BigDecimal b = new BigDecimal("0.2");
+BigDecimal sum = a.add(b); // 0.3（精确结果）
+```
+
+---
+
+### **注意事项**
+1. **排序**：对对象排序时需实现 `Comparable` 接口或提供 `Comparator`。
+2. **进制转换**：`Integer.parseInt` 的进制范围是 `2~36`。
+3. **时间日期**：避免使用旧的 `Date` 和 `Calendar` 类，优先用 `java.time`。
+4. **数学计算**：`Math.pow` 返回 `double`，需注意精度问题。
+
+这些内置方法覆盖了大部分常见需求，熟练掌握可显著提升开发效率！
+
+
+
+
 - ## 蓝桥杯练习题
 
 
