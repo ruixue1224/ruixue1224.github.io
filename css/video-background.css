@@ -1,0 +1,148 @@
+/* ============================================
+   视频背景样式
+   支持在页面中使用视频作为背景
+   ============================================ */
+
+/* 视频背景容器 */
+#video-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 视频元素 */
+#video-background-container video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  /* 确保视频在背景层 */
+  z-index: -1;
+}
+
+/* 视频遮罩层（可选，用于降低视频亮度，让内容更清晰） */
+#video-background-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* 可以调整透明度，0-1之间 */
+  z-index: 0;
+}
+
+/* 页面内容区域，确保在视频之上 */
+#body-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* 响应式设计 - 移动端优化 */
+@media (max-width: 768px) {
+  /* 全页面视频背景在移动端隐藏 */
+  #video-background-container video {
+    display: none;
+  }
+  
+  /* 移动端显示备用背景图片 */
+  #video-background-container {
+    background-image: var(--video-fallback-bg, url('/img/default_bg.jpg'));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Header区域的视频背景在移动端可以保留，但可以降低质量或使用备用图片 */
+  #page-header.video-bg .video-header-bg {
+    /* 移动端可以选择隐藏视频，使用备用图片 */
+    /* display: none; */
+    /* 或者保留视频但优化性能 */
+    object-fit: cover;
+  }
+
+  /* 如果移动端隐藏视频，显示备用背景 */
+  #page-header.video-bg:has(.video-header-bg[style*="display: none"]) {
+    background-image: var(--video-fallback-bg, url('/img/default_bg.jpg'));
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* 视频背景淡入动画 */
+#video-background-container video {
+  opacity: 0;
+  animation: videoFadeIn 1s ease-in forwards;
+}
+
+@keyframes videoFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 页面顶部区域（header）的视频背景支持 */
+#page-header.video-bg {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important; /* 移除原有背景图片 */
+}
+
+#page-header.video-bg .video-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+  /* 确保视频覆盖整个header区域 */
+  min-width: 100%;
+  min-height: 100%;
+}
+
+#page-header.video-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* 遮罩层，让文字更清晰（可调整透明度） */
+  z-index: 1;
+  pointer-events: none;
+}
+
+#page-header.video-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* 视频淡入动画 */
+#page-header.video-bg .video-header-bg {
+  opacity: 0;
+  animation: videoFadeIn 1s ease-in forwards;
+}
+
+@keyframes videoFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

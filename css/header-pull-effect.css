@@ -1,0 +1,197 @@
+/* ============================================
+   顶部背景图片下拉展开效果
+   类似微信朋友圈下拉查看背景的功能
+   ============================================ */
+
+/* 顶部背景容器 - 支持下拉展开 */
+#page-header {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 只在header区域（非导航栏区域）显示抓取光标 */
+#page-header:not(.pulled) {
+  cursor: grab;
+}
+
+#page-header:not(.pulled):active {
+  cursor: grabbing;
+}
+
+/* 确保导航栏可以点击 */
+#page-header #nav {
+  position: relative !important;
+  z-index: 1000 !important; /* 导航栏z-index高于全屏背景 */
+  pointer-events: auto !important;
+}
+
+/* 全屏展开时，导航栏仍然可以点击 */
+#page-header.pulled #nav {
+  z-index: 10000 !important; /* 全屏时导航栏在最上层 */
+  pointer-events: auto !important;
+}
+
+/* 背景图片层 */
+#page-header .header-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* 下拉时的效果 - 向下移动显示更多内容 */
+#page-header.pulling .header-bg-image {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#page-header.pulled .header-bg-image {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 下拉指示器 */
+#page-header .pull-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#page-header.pulling .pull-indicator {
+  opacity: 1;
+}
+
+#page-header .pull-indicator::before {
+  content: '↓';
+  display: block;
+  font-size: 20px;
+  margin-bottom: 5px;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 展开时的遮罩层 */
+#page-header.pulled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 展开时的关闭按钮 */
+#page-header .close-full-bg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+#page-header.pulled .close-full-bg {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#page-header .close-full-bg:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+}
+
+/* 全屏展开效果 - 显示完整图片，不放大 */
+#page-header.pulled {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999 !important; /* 降低z-index，确保导航栏可以点击（导航栏通常是100-1000） */
+  cursor: default;
+}
+
+#page-header.pulled .header-bg-image {
+  /* 显示完整图片，使用contain模式 */
+  background-size: contain !important;
+  background-position: center center !important;
+  transform: translateY(0) !important;
+  filter: brightness(1.05);
+  /* 确保图片完整显示 */
+  width: 100%;
+  height: 100%;
+}
+
+/* 内容区域在下拉时保持相对位置 */
+#page-header.pulling #page-site-info,
+#page-header.pulling #site-info,
+#page-header.pulling #post-info {
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  #page-header .pull-indicator {
+    font-size: 12px;
+  }
+  
+  #page-header .pull-indicator::before {
+    font-size: 18px;
+  }
+  
+  #page-header .close-full-bg {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+/* 防止文本选择 */
+#page-header.pulling,
+#page-header.pulled {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

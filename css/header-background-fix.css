@@ -1,0 +1,104 @@
+/* ============================================
+   顶部背景图片优化样式
+   修复颜色、比例和显示问题
+   ============================================ */
+
+/* 1. 修复分类页面背景图片路径问题 */
+/* 2. 恢复背景图片的鲜艳色彩 */
+/* 3. 调整背景图片显示比例，使其更宽 */
+
+/* 移除或减少遮罩层，恢复图片鲜艳度 */
+#page-header:not(.not-top-img)::before {
+  background-color: rgba(0, 0, 0, 0.05) !important; /* 大幅减少遮罩层透明度，从默认的0.3-0.5降到0.05，几乎透明 */
+  opacity: 0.05 !important;
+  z-index: 0 !important;
+}
+
+/* 如果遮罩层仍然太暗，可以完全移除 */
+/* 取消下面的注释可以完全移除遮罩层 */
+/*
+#page-header:not(.not-top-img)::before {
+  display: none !important;
+}
+*/
+
+/* 恢复背景图片的鲜艳色彩 - 移除滤镜效果 */
+#page-header {
+  -webkit-filter: none !important;
+  filter: none !important;
+  background-blend-mode: normal !important;
+}
+
+/* 调整背景图片显示比例 - 使其更宽，显示更多内容 */
+/* 注意：只调整比例，不改变背景图片本身（分类页面单独处理） */
+
+/* 非分类页面的背景图片比例调整 */
+body:not(.type-categories) #page-header:not(.not-top-img) {
+  background-size: 120% auto !important; /* 从 cover 改为 120% auto，显示更宽 */
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* 首页特殊处理 - 保持全屏效果但更宽 */
+body:not(.type-categories) #page-header.full_page {
+  background-size: 120% auto !important;
+  background-position: center center !important;
+}
+
+/* 其他页面（标签、归档等，但不包括分类） */
+body:not(.type-categories) #page-header.not-home-page {
+  background-size: 120% auto !important;
+  background-position: center center !important;
+}
+
+/* 文章页面 */
+body:not(.type-categories) #page-header.post-bg {
+  background-size: 120% auto !important;
+  background-position: center center !important;
+}
+
+/* 移动端优化 - 保持cover以确保显示效果 */
+@media (max-width: 768px) {
+  #page-header:not(.not-top-img) {
+    background-size: cover !important; /* 移动端使用cover确保填满 */
+    background-position: center center !important;
+  }
+}
+
+/* 增强背景图片的对比度和饱和度（可选，如果需要更鲜艳） */
+#page-header:not(.not-top-img) {
+  /* 如果需要更鲜艳，可以取消下面的注释 */
+  /* filter: brightness(1.1) saturate(1.2) !important; */
+  /* -webkit-filter: brightness(1.1) saturate(1.2) !important; */
+}
+
+/* 确保背景图片正确加载 */
+#page-header[style*="background-image"] {
+  background-attachment: scroll !important; /* 改为scroll，避免fixed导致的显示问题 */
+}
+
+/* 预加载分类页面背景图片 - 使用link rel=preload更高效 */
+/* 注意：CSS的::before预加载可能不够，已在JS中处理 */
+/* 如果需要，可以在HTML head中添加：<link rel="preload" as="image" href="/img/category_img%20.png"> */
+
+/* 修复分类页面背景图片 - 只针对分类页面 */
+/* 注意：只修改分类页面，其他页面保持原样，使用原来的背景图片 */
+
+/* 方法1: 通过body的class选择器（最精确） */
+/* body会有 class="page type-categories" 当页面类型是categories时 */
+/* 使用URL编码避免空格问题，立即设置不等待加载 */
+body.type-categories #page-header.not-home-page {
+  background-image: url('/img/category_img%20.png') !important;
+  background-size: 120% auto !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  /* 确保背景图片立即显示 */
+  background-attachment: scroll !important;
+}
+
+/* 方法2: 通过页面标题判断（备用方案） */
+#page-header.not-home-page:has(+ * #page-title:contains("分类")) {
+  background-image: url('/img/category_img%20.png') !important;
+  background-size: 120% auto !important;
+  background-position: center center !important;
+}
