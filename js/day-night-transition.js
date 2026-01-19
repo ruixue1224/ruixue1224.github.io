@@ -244,67 +244,13 @@
     }
   }
 
-  // 自动集成到博客主题（仅作为备用方案）
-  // 注意：由于已在 main.js 中手动集成，此处的自动集成主要用于其他主题
-  function autoIntegrate() {
-    // 标记：防止在页面初始化时触发动画
-    let isInitialized = false;
-    let lastTheme = null;
-    
-    // 延迟初始化，等待页面完全加载
-    setTimeout(() => {
-      isInitialized = true;
-      lastTheme = document.documentElement.getAttribute('data-theme') || 
-                  (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    }, 1000);
-    
-    // 检测 Butterfly 主题（如果 main.js 未集成，则使用此备用方案）
-    if (typeof btf !== 'undefined' && btf.switchDarkMode && !btf.switchDarkMode._transitionIntegrated) {
-      const originalSwitchDarkMode = btf.switchDarkMode;
-      const transition = new DayNightTransition();
-      
-      btf.switchDarkMode = function() {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        const targetMode = !isDark;
-        transition.play(targetMode).then(() => {
-          originalSwitchDarkMode.call(btf);
-        });
-      };
-      btf.switchDarkMode._transitionIntegrated = true;
-    }
-    
-    // 检测其他主题的切换按钮（仅作为备用）
-    // 注意：Butterfly 主题已通过 main.js 手动集成，此处不会触发
-    const darkModeToggle = document.querySelector('[id*="dark"], [class*="dark-mode"], button[aria-label*="dark"], button[aria-label*="theme"]');
-    if (darkModeToggle && !darkModeToggle._transitionIntegrated) {
-      darkModeToggle.addEventListener('click', (e) => {
-        // 只在用户主动点击时触发
-        if (isInitialized) {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 
-                              (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-          const targetMode = currentTheme === 'dark' ? true : false; // true = 日间, false = 夜间
-          if (window.dayNightTransition) {
-            window.dayNightTransition.play(targetMode);
-          }
-        }
-      });
-      darkModeToggle._transitionIntegrated = true;
-    }
-    
-    // 不自动监听主题变化，避免在页面加载时触发
-    // 动画只在用户主动切换时通过 main.js 中的 darkmode 函数触发
-  }
-
-  // 导出到全局
+  // 导出转场动画实例到全局
+  // 注意：转场动画只在点击夜间模式切换按钮时触发，不会自动监听主题变化
+  // Butterfly 主题通过 main.js 的 rightSideFn.darkmode() 函数调用 window.dayNightTransition.play()
+  // 因此不需要在此处绑定按钮事件，避免重复触发
+  
   window.DayNightTransition = DayNightTransition;
   window.dayNightTransition = new DayNightTransition();
-
-  // DOM 加载完成后自动集成
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', autoIntegrate);
-  } else {
-    autoIntegrate();
-  }
 
   // 手动触发方法（供其他脚本调用）
   window.triggerDayNightTransition = function(isDayMode) {

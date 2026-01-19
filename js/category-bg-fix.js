@@ -1,7 +1,8 @@
 /**
- * 分类页面背景图片修复
+ * 分类页面背景图片修复 - 高性能优化版本
  * 确保只有分类页面使用 category_img .png
  * 优化加载性能 - 立即设置，不等待加载，减少延迟
+ * 解决首次点击无法加载、慢加载问题
  */
 
 (function() {
@@ -10,69 +11,97 @@
   // 使用URL编码的路径，避免空格问题
   const bgImageUrl = '/img/category_img%20.png';
   
-  // 预加载图片（立即开始，不等待页面检查）
-  const preloadImg = new Image();
-  preloadImg.src = bgImageUrl;
-  preloadImg.onload = function() {
-    console.log('Category background image preloaded');
-  };
-  preloadImg.onerror = function() {
-    console.warn('Category background image preload failed');
-  };
+  // 快速检查是否是分类页面（不依赖DOM，最快速度）
+  function isCategoryPage() {
+    // 优先使用URL路径检查，最快，不依赖DOM
+    return window.location.pathname.includes('/categories/');
+  }
+
+  // 预加载图片（仅在分类页面预加载，避免浪费资源）
+  // 立即执行，不等待任何事件
+  if (isCategoryPage()) {
+    // 使用 link rel="preload" 方式预加载（更高效）
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = bgImageUrl;
+    document.head.appendChild(link);
+    
+    // 同时使用 Image 对象预加载（双重保障）
+    const preloadImg = new Image();
+    preloadImg.src = bgImageUrl;
+  }
 
   function fixCategoryBackground() {
-    // 检查是否是分类页面（快速检查，不依赖DOM）
-    const isCategoriesPage = 
-      document.body && document.body.classList.contains('type-categories') ||
-      window.location.pathname.includes('/categories/') ||
-      (document.querySelector('#page-title') && 
-       document.querySelector('#page-title').textContent.includes('分类'));
-
-    if (!isCategoriesPage) {
-      return; // 不是分类页面，不处理
+    // 快速检查，如果不是分类页面，立即返回（避免不必要的操作）
+    if (!isCategoryPage()) {
+      return;
     }
 
     const pageHeader = document.getElementById('page-header');
     if (!pageHeader) {
-      // 如果header还没加载，快速重试（减少重试次数和延迟）
+      // 如果header还没加载，快速重试（最多3次，间隔递增）
       if (typeof fixCategoryBackground.retryCount === 'undefined') {
         fixCategoryBackground.retryCount = 0;
       }
-      if (fixCategoryBackground.retryCount < 2) { // 减少到2次重试
+      if (fixCategoryBackground.retryCount < 3) {
         fixCategoryBackground.retryCount++;
-        setTimeout(fixCategoryBackground, 50); // 减少延迟到50ms
+        // 使用递增延迟：10ms, 30ms, 50ms
+        setTimeout(fixCategoryBackground, 10 * fixCategoryBackground.retryCount);
       }
       return;
     }
 
+    // 重置重试计数（成功找到header）
+    fixCategoryBackground.retryCount = 0;
+
     // 立即设置背景图片（不等待加载完成，提升体验）
-    // CSS已经设置了，这里确保JavaScript也设置，避免冲突
     const currentBg = window.getComputedStyle(pageHeader).backgroundImage;
     if (!currentBg.includes('category_img')) {
       pageHeader.style.backgroundImage = `url('${bgImageUrl}')`;
-      pageHeader.style.backgroundSize = '120% auto';
+      pageHeader.style.backgroundSize = 'cover';
       pageHeader.style.backgroundPosition = 'center center';
       pageHeader.style.backgroundRepeat = 'no-repeat';
-      console.log('Category background image set immediately:', bgImageUrl);
     }
   }
 
-  // 立即执行，不等待DOMContentLoaded（CSS已经设置了背景）
-  // 如果body还没加载，使用更快的检查方式
+  // 立即执行，不等待任何事件（最快速度）
+  fixCategoryBackground();
+  
+  // 如果body还没加载，也立即尝试（不等待）
   if (document.body) {
     fixCategoryBackground();
-  } else {
-    // 如果body还没加载，等待很短时间后重试
-    setTimeout(fixCategoryBackground, 10);
   }
   
-  // 也监听DOMContentLoaded，确保万无一失
+  // 监听DOMContentLoaded（仅一次，作为保障）
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fixCategoryBackground);
+    document.addEventListener('DOMContentLoaded', fixCategoryBackground, { once: true });
   }
   
-  // 监听window load事件，作为最后保障
-  window.addEventListener('load', function() {
-    setTimeout(fixCategoryBackground, 10);
-  });
+  // 监听pjax完成事件（分类页面通过pjax导航时，立即执行）
+  document.addEventListener('pjax:complete', function() {
+    // 重置重试计数（pjax导航后重新开始）
+    if (typeof fixCategoryBackground !== 'undefined') {
+      fixCategoryBackground.retryCount = 0;
+    }
+    // 立即执行，不延迟
+    fixCategoryBackground();
+  }, { passive: true });
+  
+  // 监听pjax发送事件（在导航开始时就预加载，提升首次加载速度）
+  document.addEventListener('pjax:send', function(e) {
+    // 检查目标URL是否是分类页面
+    const targetUrl = e.detail && e.detail.url ? e.detail.url : '';
+    if (targetUrl.includes('/categories/')) {
+      // 提前预加载图片
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = bgImageUrl;
+      document.head.appendChild(link);
+      
+      const preloadImg = new Image();
+      preloadImg.src = bgImageUrl;
+    }
+  }, { passive: true });
 })();
