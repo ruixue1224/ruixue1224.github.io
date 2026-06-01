@@ -1,427 +1,97 @@
 /* ============================================
    文章内容美化样式
    参考：https://blog.guole.fun/posts/butterfly-custom/
-   
-   为什么会出现这个图标？
-   ============================================
-   Butterfly 主题的 beautify 功能会在文章标题前添加装饰图标，
-   目的是：
-   1. 美化文章标题，增加视觉吸引力
-   2. 帮助读者快速识别标题层级
-   3. 提升阅读体验和页面美观度
-   
-   默认使用 Font Awesome 图标，但由于 CDN 加载问题，
-   我们改用 SVG 图标，完全不依赖外部资源。
    ============================================ */
 
-/* ============================================
-   图标选择：在下面的样式中选择你喜欢的图标
-   选项：windmill（风车）、star（五角星）、leaf（叶子）、flower（花朵）
-   当前使用：windmill（风车）
-   ============================================ */
-
-/* ========== 完全隐藏H1的默认图标（蓝色圆圈、橙色方块等）========== */
-/* 使用最强的选择器，确保覆盖所有主题样式 */
-#article-container h1::before,
-.article-container h1::before,
-#post h1::before,
-article h1::before,
-main h1::before,
-[data-cursor-element-id] h1::before,
-body #article-container h1::before {
-  /* 完全清除所有默认内容 */
-  content: '' !important;
-  
-  /* 完全移除 Font Awesome 依赖 */
-  font-family: Arial, sans-serif !important;
-  font-weight: normal !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  text-rendering: auto !important;
-  -webkit-font-smoothing: auto !important;
-  color: transparent !important;
-  text-indent: -9999px !important;
-  
-  /* 确保背景完全透明，移除任何方框和背景 */
-  background-color: transparent !important;
-  background-clip: padding-box !important;
-  border: none !important;
-  outline: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  
-  /* 完全移除box-shadow和filter（它们可能造成不透明效果） */
-  box-shadow: none !important;
-  filter: none !important;
-  
-  /* 重置位置和大小 - 放大图标并上移 */
-  position: absolute !important;
-  top: calc(50% - 18px) !important; /* 往上移动（图标36px高度的一半），适配更大图标 */
-  left: -52px !important; /* 图标向右移动（图标36px + 16px间距 = 52px），确保与文字有足够距离 */
-  display: block !important;
-  width: 36px !important; /* 进一步放大图标尺寸，从32px改为36px */
-  height: 36px !important;
-  
-  /* 确保可见性 */
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 1 !important;
-  
-  /* H1使用风车图标（完全透明的SVG，无背景） */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M512 512V81.92S326.13376 184.98048 326.13376 299.66848V512H512z' fill='%23FFDD50'/%3E%3Cpath d='M512 512H81.92s103.06048 185.86624 217.74848 185.86624H512V512z' fill='%23FF5757'/%3E%3Cpath d='M512 512v430.08s185.86624-103.06048 185.86624-217.74848V512H512z' fill='%235CB9FF'/%3E%3Cpath d='M512 512h430.08s-103.06048-185.86624-217.74848-185.86624H512V512z' fill='%2376E276'/%3E%3C/svg%3E") !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  
-  /* 旋转动画 */
-  -webkit-animation: rotate 2s linear infinite !important;
-  animation: rotate 2s linear infinite !important;
-  transition: transform 0.3s ease-out !important;
-}
-
-/* 完全隐藏H1中可能存在的其他伪元素（如::after中的默认图标） */
-#article-container h1::after,
-.article-container h1::after,
-#post h1::after,
-article h1::after,
-main h1::after,
-[data-cursor-element-id] h1::after {
-  /* 只保留下划线装饰，移除所有图标相关内容 */
-  font-family: Arial, sans-serif !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  color: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 确保H1元素本身没有背景色，并彻底隐藏所有默认图标 */
+/* 文章标题风车图标 */
 #article-container h1,
-.article-container h1,
-#post h1,
-article h1,
-main h1,
-[data-cursor-element-id] h1,
-body #article-container h1 {
-  background-color: transparent !important;
-  background-image: none !important;
-  /* 彻底隐藏可能存在的默认图标（蓝色圆圈、橙色方块等） */
-  position: relative !important;
-}
-
-/* 彻底隐藏H1中所有可能的默认图标字符 */
-#article-container h1::before,
-.article-container h1::before,
-#post h1::before,
-article h1::before,
-main h1::before,
-[data-cursor-element-id] h1::before,
-body #article-container h1::before {
-  /* 确保不显示任何Font Awesome字符图标 */
-  font-family: Arial, sans-serif !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  color: transparent !important;
-  text-indent: -9999px !important;
-  /* 确保不显示任何背景图标 */
-  background-color: transparent !important;
-  /* 只显示我们的风车SVG图标 */
-}
-
-/* 文章页 H2-H6 图标 - 使用漂亮的渐变风车图标（完全不依赖 Font Awesome） */
-/* ========== 完全隐藏H2-H6的默认图标（蓝色圆圈等）========== */
-#article-container h2::before,
-#article-container h3::before,
-#article-container h4::before,
-#article-container h5::before,
-#article-container h6::before,
-.article-container h2::before,
-.article-container h3::before,
-.article-container h4::before,
-.article-container h5::before,
-.article-container h6::before,
-body #article-container h2::before,
-body #article-container h3::before,
-body #article-container h4::before,
-body #article-container h5::before,
-body #article-container h6::before {
-  /* 完全清除所有默认内容 */
-  content: '' !important;
-  
-  /* 完全移除 Font Awesome 依赖 - 最重要！彻底隐藏蓝色圆圈 */
-  font-family: Arial, sans-serif !important;
-  font-weight: normal !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  text-rendering: auto !important;
-  -webkit-font-smoothing: auto !important;
-  color: transparent !important;
-  text-indent: -9999px !important; /* 彻底隐藏任何字符图标 */
-  
-  /* 确保背景完全透明，移除任何方框和背景 */
-  background-color: transparent !important;
-  background-clip: padding-box !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-  
-  /* 完全隐藏可能的Font Awesome字符图标 */
-  visibility: visible !important;
-  opacity: 1 !important;
-  
-  /* 确保没有其他背景或边框 */
-  padding: 0 !important;
-  margin: 0 !important;
-  
-  /* 重置位置 - 优化布局，放大图标并上移 */
-  position: absolute !important;
-  top: calc(50% - 22px) !important; /* 往上移动（图标36px高度的一半），适配更大图标 */
-  left: -40px !important; /* 图标向右移动（图标36px + 4px间距 = 40px），确保与文字有合适距离 */
-  
-  display: block !important;
-  width: 38px !important; /* 进一步放大图标尺寸36px */
-  height: 38px !important;
-  
-  /* ========== 图标选项 ========== */
-  /* 选项1：彩色风车图标（当前使用）- 黄红蓝绿四色，会旋转，移除中心圆圈 */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M512 512V81.92S326.13376 184.98048 326.13376 299.66848V512H512z' fill='%23FFDD50'/%3E%3Cpath d='M512 512H81.92s103.06048 185.86624 217.74848 185.86624H512V512z' fill='%23FF5757'/%3E%3Cpath d='M512 512v430.08s185.86624-103.06048 185.86624-217.74848V512H512z' fill='%235CB9FF'/%3E%3Cpath d='M512 512h430.08s-103.06048-185.86624-217.74848-185.86624H512V512z' fill='%2376E276'/%3E%3C/svg%3E") !important;
-  
-  /* 选项2：绿叶图标 🌿（取消注释使用） */
-  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M950.4 88.544A32 32 0 0 0 919.296 64h-0.192c-168.544 1.056-578.4 29.312-743.872 268.16-85.952 124.096-93.344 285.216-21.984 478.88 0.544 1.504 1.664 2.528 2.4 3.904-25.504 63.136-35.392 105.152-35.648 106.336a32.032 32.032 0 0 0 62.592 13.44c0.672-3.264 82.208-331.936 370.464-524.096 14.72-9.792 18.688-29.664 8.864-44.384s-29.664-18.72-44.384-8.864c-163.456 108.96-264.128 256.256-323.328 372.992-42.368-146.496-31.264-268.064 33.664-361.76 127.776-184.448 430.848-228.928 613.792-238.336-39.36 57.632-82.368 163.296-82.368 349.728 0 99.84-28.32 176.704-84.128 228.48-89.472 82.912-234.816 90.688-341.12 82.688a32 32 0 1 0-4.864 63.808 886.4 886.4 0 0 0 67.616 2.624c108.224 0 234.464-21.216 321.856-102.208 69.44-64.352 104.64-156.992 104.64-275.36 0-291.168 109.76-355.072 110.304-355.36 13.312-6.688 20.288-21.664 16.8-36.128z' fill='%2300C290'/%3E%3C/svg%3E"); */
-  
-  /* 选项3：雪花图标 ❄️（取消注释使用） */
-  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M512 512m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z' fill='%2319BBF8'/%3E%3Cpath d='M512 256v-153.6M512 921.6V768M256 512H102.4M921.6 512H768M388.266667 388.266667L260.266667 260.266667M763.733333 763.733333L635.733333 635.733333M388.266667 635.733333L260.266667 763.733333M763.733333 260.266667L635.733333 388.266667' stroke='%2319BBF8' stroke-width='40' stroke-linecap='round'/%3E%3C/svg%3E"); */
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  
-  /* 完全透明背景，不添加任何阴影或滤镜效果 */
-  filter: none !important;
-  box-shadow: none !important;
-  
-  /* 旋转动画（风车会旋转） */
-  -webkit-animation: rotate 2s linear infinite !important;
-  animation: rotate 2s linear infinite !important;
-  transition: transform 0.3s ease-out !important;
-}
-
-/* 悬停效果 - 放大并加速旋转（保持完全透明背景） */
-/* H1 悬停效果 */
-#article-container h1:hover::before,
-.article-container h1:hover::before,
-#post h1:hover::before,
-article h1:hover::before,
-main h1:hover::before,
-[data-cursor-element-id] h1:hover::before,
-body #article-container h1:hover::before {
-  transform: scale(1.3) !important;
-  filter: none !important; /* 保持完全透明，不添加任何滤镜 */
-  -webkit-animation: rotate 0.8s linear infinite !important;
-  animation: rotate 0.8s linear infinite !important;
-  box-shadow: none !important; /* 保持完全透明，不添加任何阴影 */
-  background-color: transparent !important; /* 确保背景完全透明 */
-}
-
-/* H2-H6 悬停效果 */
-#article-container h2:hover::before,
-#article-container h3:hover::before,
-#article-container h4:hover::before,
-#article-container h5:hover::before,
-#article-container h6:hover::before,
-.article-container h2:hover::before,
-.article-container h3:hover::before,
-.article-container h4:hover::before,
-.article-container h5:hover::before,
-.article-container h6:hover::before {
-  transform: scale(1.3) !important;
-  filter: none !important; /* 保持完全透明，不添加任何滤镜 */
-  -webkit-animation: rotate 0.8s linear infinite !important;
-  animation: rotate 0.8s linear infinite !important;
-  box-shadow: none !important; /* 保持完全透明，不添加任何阴影 */
-  background-color: transparent !important; /* 确保背景完全透明 */
-}
-
-@-webkit-keyframes rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(-360deg);
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(-360deg);
-    transform: rotate(-360deg);
-  }
-}
-
-/* 文章段落首行缩进（中文习惯） */
-#article-container p {
-  text-indent: 2em;
-  margin: 0 0 1.2em;
-  line-height: 1.8;
-  word-spacing: 0.05em;
-  letter-spacing: 0.02em;
-}
-
-/* 排除首段 */
-#article-container p:first-child {
-  text-indent: 0;
-}
-
-/* 排除列表、引用块、代码块内的段落 */
-#article-container li p,
-#article-container blockquote p,
-#article-container pre p,
-#article-container code p,
-#article-container figure.highlight p {
-  text-indent: 0;
-}
-
-/* 标题样式优化 */
-/* H1 特殊样式 - 更大的左边距，拉开与图标的距离 */
-#article-container h1,
-.article-container h1,
-#post h1,
-article h1,
-main h1,
-[data-cursor-element-id] h1,
-body #article-container h1 {
-  position: relative !important;
-  padding-left: 78px !important; /* H1使用更大的左边距（图标36px + 36px间距 = 72px），确保图标与文字有足够距离 */
-  margin-top: 1.5em !important;
-  margin-bottom: 0.8em !important;
-  font-weight: 600 !important;
-  line-height: 1.5 !important;
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-/* H1的特殊样式已经在上面定义了，这里不再重复 */
-
-/* H2-H6 标准样式 */
 #article-container h2,
 #article-container h3,
 #article-container h4,
 #article-container h5,
 #article-container h6 {
-  position: relative;
-  padding-left: 44px !important; /* 为图标留出足够空间（图标36px + 8px间距 = 44px），避免重叠 */
-  margin-top: 1.5em;
-  margin-bottom: 0.8em;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-/* 标题下划线装饰 - 渐变彩虹效果 */
-/* H1下划线 - 确保不显示任何图标（蓝色圆圈、橙色方块等） */
-#article-container h1:after,
-.article-container h1:after,
-#post h1:after,
-article h1:after,
-main h1:after,
-[data-cursor-element-id] h1:after,
-body #article-container h1:after {
-  content: '' !important;
-  display: block !important;
-  width: 80px !important;
-  height: 4px !important;
-  background: linear-gradient(90deg, #F47466, #FF7242, #49B1F5, #00c4b6, transparent) !important;
-  margin-top: 0.6em !important;
-  border-radius: 2px !important;
-  box-shadow: 0 2px 4px rgba(73, 177, 245, 0.3) !important;
-  transition: width 0.3s ease !important;
-  /* 完全移除可能的图标相关内容 */
-  font-size: 0 !important;
-  line-height: 0 !important;
-  color: transparent !important;
-  background-image: none !important;
-  background-color: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin-left: 0 !important;
   position: relative !important;
+  padding-left: 42px !important;
 }
 
-/* H2-H6下划线 */
-#article-container h2:after,
-#article-container h3:after,
-#article-container h4:after,
-#article-container h5:after,
-#article-container h6:after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #F47466, #FF7242, #49B1F5, #00c4b6, transparent);
-  margin-top: 0.6em;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(73, 177, 245, 0.3);
-  transition: width 0.3s ease;
+#article-container h1::before,
+#article-container h2::before,
+#article-container h3::before,
+#article-container h4::before,
+#article-container h5::before,
+#article-container h6::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: block !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M512 512V81.92S326.13376 184.98048 326.13376 299.66848V512H512z' fill='%23FFDD50'/%3E%3Cpath d='M512 512H81.92s103.06048 185.86624 217.74848 185.86624H512V512z' fill='%23FF5757'/%3E%3Cpath d='M512 512v430.08s185.86624-103.06048 185.86624-217.74848V512H512z' fill='%235CB9FF'/%3E%3Cpath d='M512 512h430.08s-103.06048-185.86624-217.74848-185.86624H512V512z' fill='%2376E276'/%3E%3C/svg%3E") center/contain no-repeat !important;
+  -webkit-animation: rotate 2s linear infinite !important;
+  animation: rotate 2s linear infinite !important;
+  filter: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
 }
 
-/* 标题悬停时下划线延长 */
-#article-container h1:hover:after,
-#article-container h2:hover:after,
-#article-container h3:hover:after,
-#article-container h4:hover:after,
-#article-container h5:hover:after,
-#article-container h6:hover:after {
-  width: 120px;
+/* ============================================
+   来访者卡片
+   ============================================ */
+.visitor-card-widget {
+  margin-bottom: 1rem;
 }
 
-/* 标题背景装饰 - 左侧渐变条 */
-#article-container h1,
-#article-container h2,
-#article-container h3 {
-  background: linear-gradient(90deg, rgba(244, 116, 102, 0.05) 0%, transparent 100%);
-  padding: 0.5em 1em 0.5em 0.5em !important;
-  border-left: 4px solid transparent;
-  border-image: linear-gradient(180deg, #F47466, #49B1F5) 1;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+.visitor-card-widget .visitor-card {
+  padding: 14px 18px 16px;
 }
 
-#article-container h1:hover,
-#article-container h2:hover,
-#article-container h3:hover {
-  background: linear-gradient(90deg, rgba(244, 116, 102, 0.1) 0%, transparent 100%);
-  transform: translateX(4px);
+.visitor-card-widget .visitor-card__title.item-headline {
+  margin: 0 0 12px;
+  padding: 0;
+  min-height: unset;
+  border-bottom: none;
 }
 
-/* 添加标题编号装饰（可选） */
-#article-container h2::after {
-  counter-increment: heading-counter;
+.visitor-card-widget .visitor-card__title .fa-compass {
+  color: var(--theme-color);
 }
 
-/* 其他装饰效果 */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
+.visitor-card-widget .visitor-card__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 14px;
+  color: var(--font-color);
+}
+
+.visitor-card-widget .visitor-card__item + .visitor-card__item {
+  border-top: 1px dashed var(--card-border-color, rgba(73, 177, 245, 0.16));
+}
+
+.visitor-card-widget .visitor-card__item span {
+  color: var(--font-color);
+  opacity: 0.65;
+  flex: 0 0 auto;
+}
+
+.visitor-card-widget .visitor-card__item strong {
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
+}
+
+@media (max-width: 768px) {
+  .visitor-card-widget .visitor-card__item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 8px rgba(244, 116, 102, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 16px rgba(244, 116, 102, 0.8);
+  .visitor-card-widget .visitor-card__item strong {
+    text-align: left;
   }
 }
