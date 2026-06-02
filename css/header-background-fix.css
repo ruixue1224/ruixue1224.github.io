@@ -96,9 +96,4 @@ body.type-categories #page-header.not-home-page {
   background-attachment: scroll !important;
 }
 
-/* 方法2: 通过页面标题判断（备用方案） */
-#page-header.not-home-page:has(+ * #page-title:contains("分类")) {
-  background-image: url('/img/category_img%20.png') !important;
-  background-size: 120% auto !important;
-  background-position: center center !important;
-}
+

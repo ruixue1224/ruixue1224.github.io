@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>用 Scoop 优雅管理 Windows 软件 | 瑞雪のblog</title><meta name="author" content="瑞雪"><meta name="copyright" content="瑞雪"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Scoop 是一款专为 Windows 设计的命令行软件包 管理工具，它能让你像 Linux 系统一样通过命令快速安装、更新和卸载软件。其核心优势包括： 无需管理员权限：默认安装在用户目录，避免权限问题。绿色便携化：软件独立存放，不污染系统注册表。依赖自动处理：自动配置环境变量和依赖项（如 Java、Python）。海量软件仓库：支持主流开发工具、实用小软件甚至 GUI 应用。——————————">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Scoop 优雅管理 Windows 软件">
+<meta property="og:url" content="https://ruixue1224.github.io/2026/04/11/Scoop/index.html">
+<meta property="og:site_name" content="瑞雪のblog">
+<meta property="og:description" content="Scoop 是一款专为 Windows 设计的命令行软件包 管理工具，它能让你像 Linux 系统一样通过命令快速安装、更新和卸载软件。其核心优势包括： 无需管理员权限：默认安装在用户目录，避免权限问题。绿色便携化：软件独立存放，不污染系统注册表。依赖自动处理：自动配置环境变量和依赖项（如 Java、Python）。海量软件仓库：支持主流开发工具、实用小软件甚至 GUI 应用。——————————">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ruixue1224.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-04-11T11:41:00.000Z">
+<meta property="article:modified_time" content="2026-05-28T09:58:42.748Z">
+<meta property="article:author" content="瑞雪">
+<meta property="article:tag" content="tools">
+<meta property="article:tag" content="Scoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruixue1224.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "用 Scoop 优雅管理 Windows 软件",
+  "url": "https://ruixue1224.github.io/2026/04/11/Scoop/",
+  "image": "https://ruixue1224.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-04-11T11:41:00.000Z",
+  "dateModified": "2026-05-28T09:58:42.748Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "瑞雪",
+      "url": "https://ruixue1224.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://ruixue1224.github.io/2026/04/11/Scoop/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '用 Scoop 优雅管理 Windows 软件',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/video-background.css"><link rel="stylesheet" href="/css/header-background-fix.css"><link rel="preload" as="image" href="/img/category_img%20.png"><link rel="stylesheet" href="/css/frame.css"><link rel="stylesheet" href="/css/footer_lucency.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/nightsky.css"><link rel="stylesheet" href="/css/day-night-transition.css"><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg" style="background-image: url(/img/default_bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-window-maximize"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-coffee"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/travel/"><i class="fa-fw fas fa-map-marker-alt"></i><span> 旅迹</span></a></li><li><a class="site-page child" href="/essay/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://gitee.com/auspicious-snow1224"><i class="fa-fw fab fa-git-alt"></i><span> Gitee</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/default_bg.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/leaf.png" alt="Logo"><span class="site-name">瑞雪のblog</span></a><a class="nav-page-title" href="/"><span class="site-name">用 Scoop 优雅管理 Windows 软件</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-window-maximize"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-coffee"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/travel/"><i class="fa-fw fas fa-map-marker-alt"></i><span> 旅迹</span></a></li><li><a class="site-page child" href="/essay/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly"><i class="fa-fw fab fa-github"></i><span> GitHub</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://gitee.com/auspicious-snow1224"><i class="fa-fw fab fa-git-alt"></i><span> Gitee</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">用 Scoop 优雅管理 Windows 软件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-11T11:41:00.000Z" title="发表于 2026-04-11 19:41:00">2026-04-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-28T09:58:42.748Z" title="更新于 2026-05-28 17:58:42">2026-05-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%88%86%E4%BA%AB/">分享</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>Scoop 是一款专为 Windows 设计的命令行软件包 管理工具，它能让你像 Linux 系统一样通过命令快速安装、更新和卸载软件。其核心优势包括：</p>
+<p>无需管理员权限：默认安装在用户目录，避免权限问题。<br>绿色便携化：软件独立存放，不污染系统注册表。<br>依赖自动处理：自动配置环境变量和依赖项（如 Java、Python）。<br>海量软件仓库：支持主流开发工具、实用小软件甚至 GUI 应用。<br>————————————————</p>
+<p><img src="image.png" alt="image"></p>
+<h1 id="【保姆级】Scoop-国内稳定安装脚本-告别下载慢、安装坑"><a href="#【保姆级】Scoop-国内稳定安装脚本-告别下载慢、安装坑" class="headerlink" title="【保姆级】Scoop 国内稳定安装脚本 | 告别下载慢、安装坑"></a>【保姆级】Scoop 国内稳定安装脚本 | 告别下载慢、安装坑</h1><p>在 Windows 生态中，我们常常苦恼于软件安装的「碎片化」：官网找安装包、手动配置环境变量、卸载残留文件… 而 <strong>Scoop</strong> 正是为解决这些问题而生的「Windows 命令行包管理器」—— 像 Linux 的 <code>apt</code>、macOS 的 <code>brew</code> 一样，用一行命令搞定软件的安装、卸载、更新，彻底告别繁琐的手动操作。</p>
+<p>本文不仅会详细介绍 Scoop 的核心价值，还提供了一套<strong>国内镜像优化的安装脚本</strong>（托管在 Gitee），解决官方源访问慢、安装失败等痛点，让国内用户能「一键无痛」用上 Scoop。</p>
+<h2 id="一、什么是-Scoop？核心价值是什么？"><a href="#一、什么是-Scoop？核心价值是什么？" class="headerlink" title="一、什么是 Scoop？核心价值是什么？"></a>一、什么是 Scoop？核心价值是什么？</h2><p>Scoop 是一款轻量级的 Windows 命令行包管理器，由开源社区维护，核心目标是「让 Windows 软件管理更简洁」。相比传统安装方式，它的优势体现在这些方面：</p>
+<h3 id="1-无管理员权限也能装软件"><a href="#1-无管理员权限也能装软件" class="headerlink" title="1. 无管理员权限也能装软件"></a>1. 无管理员权限也能装软件</h3><p>Scoop 默认将软件安装到用户目录（如 <code>D:\Scoop</code>&#x2F;<code>C:\Users\你的用户名\scoop</code>），无需管理员权限，避免 UAC 弹窗和系统目录污染，尤其适合办公电脑&#x2F;受限环境。</p>
+<h3 id="2-一行命令搞定「安装-卸载-更新」"><a href="#2-一行命令搞定「安装-卸载-更新」" class="headerlink" title="2. 一行命令搞定「安装&#x2F;卸载&#x2F;更新」"></a>2. 一行命令搞定「安装&#x2F;卸载&#x2F;更新」</h3><ul>
+<li>安装：<code>scoop install git vscode nodejs</code>（批量装多个软件）</li>
+<li>卸载：<code>scoop uninstall vscode</code>（无残留，自动清理配置&#x2F;环境变量）</li>
+<li>更新：<code>scoop update *</code>（一键更新所有已装软件）</li>
+<li>搜索：<code>scoop search python</code>（快速查找可用软件版本）</li>
+</ul>
+<h3 id="3-纯净无捆绑，远离流氓软件"><a href="#3-纯净无捆绑，远离流氓软件" class="headerlink" title="3. 纯净无捆绑，远离流氓软件"></a>3. 纯净无捆绑，远离流氓软件</h3><p>Scoop 收录的软件均为官方原版，无广告、无捆绑、无修改，彻底告别第三方下载站的「全家桶」陷阱。</p>
+<h3 id="4-灵活的版本管理"><a href="#4-灵活的版本管理" class="headerlink" title="4. 灵活的版本管理"></a>4. 灵活的版本管理</h3><p>通过 <code>scoop versions</code> 仓库，可轻松安装软件的历史版本（比如 <code>scoop install nodejs@16.18.0</code>），解决「新版本兼容问题」「旧版本刚需」等场景。</p>
+<h3 id="5-自定义软件源（Bucket）"><a href="#5-自定义软件源（Bucket）" class="headerlink" title="5. 自定义软件源（Bucket）"></a>5. 自定义软件源（Bucket）</h3><p>Scoop 支持通过「Bucket（软件仓库）」扩展软件库，除了官方 <code>main</code> 仓库（基础工具），还有 <code>extras</code>（桌面软件）、<code>dorado</code>（中文软件）等，覆盖几乎所有常用工具。</p>
+<h2 id="二、国内使用-Scoop-的痛点？"><a href="#二、国内使用-Scoop-的痛点？" class="headerlink" title="二、国内使用 Scoop 的痛点？"></a>二、国内使用 Scoop 的痛点？</h2><p>官方 Scoop 依赖 GitHub 源，国内用户直接安装会遇到：</p>
+<ol>
+<li>安装脚本下载超时、失败；</li>
+<li>软件包下载速度极慢（几KB&#x2F;s）；</li>
+<li>Bucket 仓库同步延迟，找不到部分软件；</li>
+<li>手动配置镜像&#x2F;代理繁琐，新手易踩坑。</li>
+</ol>
+<p>为此，我基于国内镜像源封装了一套<strong>一键安装脚本</strong>，解决以上所有问题。</p>
+<h2 id="三、脚本核心优势（Gitee-托管，国内直达）"><a href="#三、脚本核心优势（Gitee-托管，国内直达）" class="headerlink" title="三、脚本核心优势（Gitee 托管，国内直达）"></a>三、脚本核心优势（Gitee 托管，国内直达）</h2><p>本脚本针对国内环境做了深度优化，核心特性：</p>
+<ol>
+<li><p><strong>国内镜像源优先</strong>：</p>
+<ul>
+<li>Scoop 主仓库替换为 Gitee 镜像（<code>https://gitee.com/scoop-installer/scoop</code>）；</li>
+<li>Bucket 仓库替换为南京大学镜像（<code>mirror.nju.edu.cn</code>），速度拉满；</li>
+<li>安装脚本优先拉取 Gitee 镜像，失败自动回退官方源。</li>
+</ul>
+</li>
+<li><p><strong>路径自定义+容错</strong>：<br>默认安装到 <code>D:\Scoop</code>（避免 C 盘臃肿），若 D 盘不可写自动回退到用户目录，无需手动改配置。</p>
+</li>
+<li><p><strong>自动配置下载加速</strong>：<br>自动安装 <code>aria2</code> 并开启多线程下载（5线程+断点续传），下载速度提升数倍；<br>配置南大 GitHub 代理，解决 GitHub 资源拉取慢的问题。</p>
+</li>
+<li><p><strong>中文提示+可重复执行</strong>：<br>全程中文指引，新手也能看懂；脚本支持重复运行（已安装则跳过，未配置则补充），不怕中途出错。</p>
+</li>
+<li><p><strong>预装常用 Bucket</strong>：<br>自动配置 <code>main</code>&#x2F;<code>extras</code>&#x2F;<code>versions</code>（官方核心仓库）+ <code>dorado</code>&#x2F;<code>scoopcn</code>（中文软件仓库），开箱即用。</p>
+</li>
+</ol>
+<h2 id="四、使用方法（三步搞定）"><a href="#四、使用方法（三步搞定）" class="headerlink" title="四、使用方法（三步搞定）"></a>四、使用方法（三步搞定）</h2><h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul>
+<li>Windows 10&#x2F;11 系统；</li>
+<li>打开「普通用户权限」的 PowerShell（<strong>不要用管理员身份</strong>！脚本会检测并提示）；</li>
+<li>确保网络可访问外网（无需科学上网，镜像源已适配国内）。</li>
+</ul>
+<h3 id="执行步骤"><a href="#执行步骤" class="headerlink" title="执行步骤"></a>执行步骤</h3><ol>
+<li>打开 PowerShell（按下 <code>Win+R</code>，输入 <code>powershell</code>，回车）；</li>
+<li>执行以下命令（直接复制粘贴），拉取并运行脚本：</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时允许执行脚本（仅当前会话有效）</span></span><br><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned <span class="literal">-Scope</span> CurrentUser <span class="literal">-Force</span></span><br><span class="line"><span class="comment"># 下载并运行 Gitee 上的安装脚本（替换为你的 Gitee 仓库地址）</span></span><br><span class="line"><span class="built_in">irm</span> https://gitee.com/你的用户名/你的仓库名/raw/master/install_scoop.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>等待脚本自动执行（全程无需手动干预），执行完成后<strong>重新打开 PowerShell</strong> 即可使用 Scoop。</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>若提示「无法连接镜像」，检查网络后重新运行即可；</li>
+<li>脚本执行完成后，建议重启 PowerShell 让环境变量生效；</li>
+<li>如需卸载 Scoop，执行 <code>scoop uninstall scoop</code> 即可彻底清理。</li>
+</ul>
+<h2 id="五、Scoop-常用命令（新手速查）"><a href="#五、Scoop-常用命令（新手速查）" class="headerlink" title="五、Scoop 常用命令（新手速查）"></a>五、Scoop 常用命令（新手速查）</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">scoop <span class="literal">--version</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索软件</span></span><br><span class="line">scoop search 软件名（如 git/vscode/python）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装软件</span></span><br><span class="line">scoop install 软件名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载软件</span></span><br><span class="line">scoop uninstall 软件名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有已装软件</span></span><br><span class="line">scoop update *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出已安装软件</span></span><br><span class="line">scoop list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加额外 Bucket（如 dorado 中文仓库）</span></span><br><span class="line">scoop bucket add dorado https://gitee.com/scoop<span class="literal">-bucket</span>/dorado.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理缓存/残留</span></span><br><span class="line">scoop cleanup *</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>Scoop 是 Windows 效率提升的「神器」—— 用命令行替代繁琐的图形化操作，让软件管理更高效、更纯净。而本脚本则解决了国内用户的「安装门槛」，通过镜像源、自动配置、中文提示，让新手也能快速上手。</p>
+<p>脚本已托管至 Gitee 仓库：<a target="_blank" rel="noopener" href="https://gitee.com/auspicious-snow1224/Scoop_install_project">https://gitee.com/auspicious-snow1224/Scoop_install_project</a><br>欢迎 Star&#x2F;Fork，也欢迎提 Issue 反馈问题。如果觉得有用，不妨分享给身边的开发者&#x2F;Windows 用户～</p>
+<hr>
+<h3 id="附：脚本开源说明"><a href="#附：脚本开源说明" class="headerlink" title="附：脚本开源说明"></a>附：脚本开源说明</h3><p>本脚本基于 Scoop 官方安装逻辑修改，核心优化点：</p>
+<ul>
+<li>替换所有境外源为国内镜像；</li>
+<li>增加路径容错、环境变量预配置；</li>
+<li>自动配置 aria2 加速和代理；</li>
+<li>全程中文交互，降低使用门槛。<br>脚本遵循 MIT 协议开源，可自由修改、分发。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://ruixue1224.github.io">瑞雪</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://ruixue1224.github.io/2026/04/11/Scoop/">https://ruixue1224.github.io/2026/04/11/Scoop/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://ruixue1224.github.io" target="_blank">瑞雪のblog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/tools/">tools</a><a class="post-meta__tags" href="/tags/Scoop/">Scoop</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/28/rules/" title="vibe coding杂谈"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">vibe coding杂谈</div></div><div class="info-2"><div class="info-item-1">瑞雪Vibe Coding：AI编程的工程化实践规范摘要： 随着AI编程工具的普及，Vibe Coding模式极大提升了开发效率，但也带来了输出质量不稳定、过程不可控、团队协作困难等问题。本文介绍一套博主编写的开源的Vibe Coding rules，它通过标准化的工作流程、沟通语言和交付标准，构建了从需求到交付的完整闭环。本文将详细解析每条规则的设计思路、实践方法和实际效果，帮助开发者建立规范的AI开发流程，实现人机协作的高效工程化交付。如果使用这套rules有帮助的话，请帮博主点个star⭐吧 一、Vibe Coding工程化的必要性在过去一年中，AI编辑器从Cursor...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">瑞雪</div><div class="author-info-description">晚来天欲雪，能饮一杯无</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/auspicious-snow1224"><i class="fab fa-git-alt"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">知命不惧，日日自新；诸君至此，俱怀逸兴。不畏前路，日进不已；同攀青云，共摘皓月。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E4%BF%9D%E5%A7%86%E7%BA%A7%E3%80%91Scoop-%E5%9B%BD%E5%86%85%E7%A8%B3%E5%AE%9A%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC-%E5%91%8A%E5%88%AB%E4%B8%8B%E8%BD%BD%E6%85%A2%E3%80%81%E5%AE%89%E8%A3%85%E5%9D%91"><span class="toc-number">1.</span> <span class="toc-text">【保姆级】Scoop 国内稳定安装脚本 | 告别下载慢、安装坑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Scoop%EF%BC%9F%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">一、什么是 Scoop？核心价值是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%97%A0%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E4%B9%9F%E8%83%BD%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 无管理员权限也能装软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%90%9E%E5%AE%9A%E3%80%8C%E5%AE%89%E8%A3%85-%E5%8D%B8%E8%BD%BD-%E6%9B%B4%E6%96%B0%E3%80%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. 一行命令搞定「安装&#x2F;卸载&#x2F;更新」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BA%AF%E5%87%80%E6%97%A0%E6%8D%86%E7%BB%91%EF%BC%8C%E8%BF%9C%E7%A6%BB%E6%B5%81%E6%B0%93%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 纯净无捆绑，远离流氓软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%81%B5%E6%B4%BB%E7%9A%84%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 灵活的版本管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AF%E4%BB%B6%E6%BA%90%EF%BC%88Bucket%EF%BC%89"><span class="toc-number">1.1.5.</span> <span class="toc-text">5. 自定义软件源（Bucket）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BD%E5%86%85%E4%BD%BF%E7%94%A8-Scoop-%E7%9A%84%E7%97%9B%E7%82%B9%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">二、国内使用 Scoop 的痛点？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%84%9A%E6%9C%AC%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF%EF%BC%88Gitee-%E6%89%98%E7%AE%A1%EF%BC%8C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BE%BE%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、脚本核心优势（Gitee 托管，国内直达）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%B8%89%E6%AD%A5%E6%90%9E%E5%AE%9A%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、使用方法（三步搞定）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.4.1.</span> <span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">执行步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.4.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Scoop-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%88%E6%96%B0%E6%89%8B%E9%80%9F%E6%9F%A5%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">五、Scoop 常用命令（新手速查）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">六、总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E8%84%9A%E6%9C%AC%E5%BC%80%E6%BA%90%E8%AF%B4%E6%98%8E"><span class="toc-number">1.6.1.</span> <span class="toc-text">附：脚本开源说明</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/11/Scoop/" title="用 Scoop 优雅管理 Windows 软件">用 Scoop 优雅管理 Windows 软件</a><time datetime="2026-04-11T11:41:00.000Z" title="发表于 2026-04-11 19:41:00">2026-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/28/rules/" title="vibe coding杂谈">vibe coding杂谈</a><time datetime="2026-03-28T07:21:00.000Z" title="发表于 2026-03-28 15:21:00">2026-03-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/05/%E5%9B%BD%E5%86%85%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85%20K3s%20%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/" title="国内云服务器安装 K3s 完整指南">国内云服务器安装 K3s 完整指南</a><time datetime="2026-03-05T02:51:00.000Z" title="发表于 2026-03-05 10:51:00">2026-03-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/18/AI%E7%BC%96%E8%BE%91%E5%99%A8%E6%9D%82%E8%B0%88/" title="AI编辑器杂谈">AI编辑器杂谈</a><time datetime="2026-01-18T07:21:00.000Z" title="发表于 2026-01-18 15:21:00">2026-01-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" title="计算机技术学习之路：从入门到进阶">计算机技术学习之路：从入门到进阶</a><time datetime="2026-01-05T13:28:00.000Z" title="发表于 2026-01-05 21:28:00">2026-01-05</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/default_bg.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By 瑞雪</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><div class="snow-container"></div><script src="/js/snowy.js"></script><script src="/js/video-background.js"></script><script src="/js/category-bg-fix.js"></script><script src="/js/day-night-transition.js"></script><canvas id="universe"></canvas><script src="/js/nightsky.js"></script><script src="/js/fish.js"></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script src="/js/ip_content.js"></script><div class="aplayer no-destroy" data-id="7422861869" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-lrcType="-1"> </div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="250" alpha="0.7" zIndex="-1" mobile="true" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.9" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
+      }
+    }
+  }
+
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
+
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false 
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="请输入关键词搜索..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
