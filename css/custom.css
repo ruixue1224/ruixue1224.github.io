@@ -3,6 +3,28 @@
    参考：https://blog.guole.fun/posts/butterfly-custom/
    ============================================ */
 
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 /* 文章标题风车图标 */
 #article-container h1,
 #article-container h2,
@@ -24,13 +46,15 @@
   position: absolute !important;
   left: 6px !important;
   top: 50% !important;
-  transform: translateY(-50%) !important;
+  margin-top: -16px !important;
+  translate: 0 -50% !important;
   display: block !important;
   width: 32px !important;
   height: 32px !important;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M512 512V81.92S326.13376 184.98048 326.13376 299.66848V512H512z' fill='%23FFDD50'/%3E%3Cpath d='M512 512H81.92s103.06048 185.86624 217.74848 185.86624H512V512z' fill='%23FF5757'/%3E%3Cpath d='M512 512v430.08s185.86624-103.06048 185.86624-217.74848V512H512z' fill='%235CB9FF'/%3E%3Cpath d='M512 512h430.08s-103.06048-185.86624-217.74848-185.86624H512V512z' fill='%2376E276'/%3E%3C/svg%3E") center/contain no-repeat !important;
-  -webkit-animation: rotate 2s linear infinite !important;
-  animation: rotate 2s linear infinite !important;
+  transform-origin: center center !important;
+  -webkit-animation: spin 2s linear infinite !important;
+  animation: spin 2s linear infinite !important;
   filter: none !important;
   box-shadow: none !important;
   opacity: 1 !important;
